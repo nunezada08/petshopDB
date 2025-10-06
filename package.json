@@ -1,0 +1,27 @@
+{
+  "name": "petbancoback",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cls && nodemon server.js",
+    "studio": "npx prisma studio"
+  },
+  "keywords": [
+    "SENAI",
+    "nodemon",
+    "backend",
+    "bando de dados"
+  ],
+  "author": "Vitor Nunes",
+  "license": "MIT",
+  "description": "Atividade de integrar banco de dados com back-end",
+  "dependencies": {
+    "@prisma/client": "^6.16.3",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.16.3"
+  }
+}
