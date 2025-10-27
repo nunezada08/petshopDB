@@ -18,6 +18,7 @@
   "license": "MIT",
   "description": "Atividade de integrar banco de dados com back-end",
   "dependencies": {
+    "@faker-js/faker": "^10.1.0",
     "@prisma/client": "^6.16.3",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",

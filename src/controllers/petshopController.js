@@ -53,3 +53,42 @@ export const buscarPetPorId = async (req,res) => {
         })
     }
 }
+
+export const criarPet = async (req, res) => {
+    try {
+        const { nome, especie, idade, dono } = req.body;
+
+        const dado = req.body;
+
+        const camposObrigatorios = ['nome', 'especie', 'idade', 'dono'];
+
+        const faltando = camposObrigatorios.filter(campo => !dado[campo]);
+
+        if (faltando.length > 0) {
+            return res.status(400).json({
+                erro: `Os seguintes campos são obrigatórios: ${faltando.join(', ')}.`
+            });
+        }
+
+        const especiesValidas = ['Cachorro', 'Gato', 'Pássaro', 'Peixe'];
+        if (!especiesValidas.includes(especie)) {
+            return res.status(400).json({
+                erro: `Especie inválida.`,
+                especiesValidas
+            })
+        }
+
+        const novoPet = await petshopModel.create(dado);
+
+    res.status(201).json({
+        mensagem: 'Novo pet criado com sucesso.',
+        pet: novoPet
+    })
+
+    } catch (error) {
+        res.status(500).json({
+            erro: 'Erro ao adicionar um pet.',
+            detalhes: error.message
+        })
+    }
+}
