@@ -92,3 +92,75 @@ export const criarPet = async (req, res) => {
         })
     }
 }
+
+export const apagar = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+
+        const petExiste = await petshopModel.findById(id);
+
+        if (!petExiste) {
+            return res.status(404).json({
+                erro: 'Pet não encontrado.',
+                mensagem: "Verifique se o ID do pet existe.",
+                id: id,
+            })
+        }
+
+        await petshopModel.deletePet(id);
+
+        res.status(200).json({
+            mensagem: "Pet apagado com sucesso.",
+            petRemovido: petExiste
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            erro: 'Erro ao apagar o pet.',
+            detalhes: error.message
+        })
+    }
+}
+
+export const atualizar = async (req, res) => {
+    try {
+
+        const id = parseInt(req.params.id);
+        const dados = req.body;
+
+        const petExiste = await petshopModel.findById(id);
+
+        if (!petExiste) {
+            return res.status(404).json({
+                erro: 'Pet não encontrado.',
+                mensagem: "Verifique se o ID do pet existe.",
+                id: id,
+            })
+        }
+
+        if (dados.especie) {
+            const especiesValidas = ['nome', 'especie', 'idade', 'dono'];
+            if (!especiesValidas.includes(dados)) {
+                return res.status(400).json({
+                    erro: `Especie inválida.`,
+                    especiesValidas
+            })
+        }
+    }
+
+        const petAtualizado = await petshopModel.updatePet(id, dados);
+
+        res.status(200).json({
+            mensagem: 'Pet atualizado com sucesso.',
+            pet: petAtualizado
+        })
+
+
+    } catch (error) {
+        res.status(500).json({
+            erro: 'Erro ao atualizar o pet.',
+            detalhes: error.message
+        })
+        
+    }
+}
